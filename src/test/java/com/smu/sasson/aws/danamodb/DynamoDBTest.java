@@ -1,4 +1,4 @@
-package net.ion.aws.dynamodb;
+package com.smu.sasson.aws.danamodb;
 
 import com.amazonaws.auth.ClasspathPropertiesFileCredentialsProvider;
 import com.amazonaws.regions.Regions;
