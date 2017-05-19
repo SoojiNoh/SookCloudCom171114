@@ -13,23 +13,23 @@ import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 @Configuration
 public class DynamoDBConfig {
 
-	@Bean
-	public AWSCredentials awsCredentials() {
-	  return new BasicAWSCredentials(amazonAWSAccessKey, amazonAWSSecretKey);
-	}
-
-	@Bean 
-	public AmazonDynamoDB amazonDynamoDB(AWSCredentials awsCredentials) {
-	  AmazonDynamoDB amazonDynamoDB = new AmazonDynamoDBClient(awsCredentials);
-	  if (!StringUtils.isEmpty(amazonDynamoDBEndpoint)) {
-	    amazonDynamoDB.setEndpoint(amazonDynamoDBEndpoint);
-	  }
-	  return amazonDynamoDB;
-	}
-
-	@Bean
-	public DynamoDB dynamoDB(AmazonDynamoDB amazonDynamoDB) {
-	  return new DynamoDB(amazonDynamoDB);
-	}
+//	@Bean
+//	public AWSCredentials awsCredentials() {
+//	  return new BasicAWSCredentials(amazonAWSAccessKey, amazonAWSSecretKey);
+//	}
+//
+//	@Bean 
+//	public AmazonDynamoDB amazonDynamoDB(AWSCredentials awsCredentials) {
+//	  AmazonDynamoDB amazonDynamoDB = new AmazonDynamoDBClient(awsCredentials);
+//	  if (!StringUtils.isEmpty(amazonDynamoDBEndpoint)) {
+//	    amazonDynamoDB.setEndpoint(amazonDynamoDBEndpoint);
+//	  }
+//	  return amazonDynamoDB;
+//	}
+//
+//	@Bean
+//	public DynamoDB dynamoDB(AmazonDynamoDB amazonDynamoDB) {
+//	  return new DynamoDB(amazonDynamoDB);
+//	}
 
 }
