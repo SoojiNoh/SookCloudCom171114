@@ -1,6 +1,7 @@
 package com.smu.saason.dao;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +16,14 @@ public class StudentDAO {
 	private JdbcTemplate jdbcTemplate;
 
 	public List<Student> getStudents() throws SQLException {
-		List<Student> result = jdbcTemplate.query("select id, name from student", (rs, rowNum) -> {
-			String id = rs.getString("id");
-			String name = rs.getString("name");
-			return new Student(id, name);
+		List<Student> result = jdbcTemplate.query("select * from student", (rs, rowNum) -> {
+			return new Student(rs.getString("username"), rs.getString("email"),rs.getString("password"), rs.getTimestamp("create_time").getTime());
 		});
 		
 		return result;
+	}
+
+	public int insert(Student student) throws SQLException {
+		return jdbcTemplate.update("insert into student values (?,?,?,?)", student.username(), student.email(), student.password(), new Timestamp(student.create_time()));
 	}
 }

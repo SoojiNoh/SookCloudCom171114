@@ -15,20 +15,16 @@ import com.smu.saason.dao.StudentDAO;
 
 import net.minidev.json.parser.ParseException;
 
-/**
- * Created by mint on 04/05/2017.
- */
-
 @RestController
 @RequestMapping("/api")
-public class TestRestlet extends AbstractRestlet{
+public class StudentRestlet extends AbstractRestlet{
 	@Autowired
 	StudentDAO studentDAO;
 	
-    @RequestMapping(method = RequestMethod.GET, value = "/test", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String search() throws ParseException, IOException, SQLException {
+    @RequestMapping(method = RequestMethod.GET, value = "/students", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String students() throws ParseException, IOException, SQLException {
     	List<Student> students = studentDAO.getStudents();
-    	return toJsonstring(students);
+    	return toJson(students);
     }
 
 	

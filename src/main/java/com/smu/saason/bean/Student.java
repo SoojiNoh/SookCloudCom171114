@@ -10,7 +10,16 @@ import lombok.experimental.Accessors;
 @ToString
 public class Student {
 	
-	@Getter private String id;
-	@Getter private String name;
+	@Getter 
+	private String username;
+	
+	@Getter 
+	private String email;
+	
+	@Getter 
+	private String password;
+	
+	@Getter 
+	private long create_time = System.currentTimeMillis();
 
 }

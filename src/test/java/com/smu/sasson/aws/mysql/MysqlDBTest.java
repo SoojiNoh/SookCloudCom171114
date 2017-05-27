@@ -3,6 +3,7 @@ package com.smu.sasson.aws.mysql;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,30 +20,39 @@ import lombok.experimental.Accessors;
 
 public class MysqlDBTest extends SaasonApplicationTests {
 
-//	@Autowired
-//	private JdbcTemplate jdbcTemplate;
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 	
 	
 	@Autowired
 	StudentDAO studentDAO;
 	
 	@Test
-	public void testDB() throws SQLException{
+	public void testGetStudents() throws SQLException{
 		List<Student> students = studentDAO.getStudents();
 		students.stream().forEach(System.out::println);
 	}
+
+	@Test
+	public void testInsertStudent() throws SQLException{
+		Student student = new Student("mint1000",  "mintdf@gdf.com", "1111", System.currentTimeMillis());
+		int insert = studentDAO.insert(student);
+		Assert.assertEquals(1, insert);
+		
+	}
 	
-//	@Test
-//	@Ignore
-//	public void testQuery() {
-//		List<TestRecord> result = jdbcTemplate.query("select id, name from student", (rs, rowNum) -> {
+	@Test
+	@Ignore
+	public void testQuery() {
+		List<TestRecord> result = jdbcTemplate.query("select username, email from student", (rs, rowNum) -> {
 //			String id = rs.getString("id");
-//			String name = rs.getString("name");
-//			return new TestRecord(id, name);
-//		});
-//		
-//	    result.stream().forEach(System.out::println);
-//	}
+			String username = rs.getString("username");
+			String email = rs.getString("email");
+			return new TestRecord(username, email);
+		});
+		
+	    result.stream().forEach(System.out::println);
+	}
 	
 
 }
@@ -52,7 +62,7 @@ public class MysqlDBTest extends SaasonApplicationTests {
 @ToString
 class TestRecord {
 	
-	@Getter private String id;
+	@Getter private String username;
 	@Getter private String name;
 
 }
