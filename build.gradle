@@ -82,6 +82,9 @@ dependencies {
     runtime('org.springframework.boot:spring-boot-devtools')
 
     compileOnly('org.springframework.boot:spring-boot-configuration-processor')
+    
+    compile group: 'net.minidev', name: 'json-smart', version: '2.3'
+    
 }
 
 compileJava.dependsOn(processResources)
