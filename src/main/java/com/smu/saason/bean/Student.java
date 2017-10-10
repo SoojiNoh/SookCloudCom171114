@@ -21,5 +21,8 @@ public class Student {
 	
 	@Getter 
 	private long create_time = System.currentTimeMillis();
+	
+//	@Getter
+//	private String myfield;
 
 }
