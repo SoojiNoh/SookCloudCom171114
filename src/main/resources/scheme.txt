@@ -7,3 +7,6 @@ CREATE TABLE `mydb`.`student` (
 
 insert into `mydb`.`student` (`username`, `email`, `password`) values ('id1', 'email@adf.com', 'aaa');
 insert into `mydb`.`student` (`username`, `email`, `password`) values ('id2', 'email2@adf.com', 'aaa2');
+
+
+
