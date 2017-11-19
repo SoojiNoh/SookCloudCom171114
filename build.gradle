@@ -89,6 +89,19 @@ dependencies {
     // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
 	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
 	
+	// https://mvnrepository.com/artifact/commons-logging/commons-logging
+	compile group: 'commons-logging', name: 'commons-logging', version: '1.2'
+	
+	// https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
+	compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
+	
+	// https://mvnrepository.com/artifact/org.apache.httpcomponents/httpcore
+	compile group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.6'
+	
+	// https://mvnrepository.com/artifact/org.jsoup/jsoup
+	compile group: 'org.jsoup', name: 'jsoup', version: '1.10.2'
+	
+	
 }
 
 compileJava.dependsOn(processResources)
