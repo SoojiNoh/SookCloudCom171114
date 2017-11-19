@@ -1,11 +1,9 @@
-package com.smu.saason;
+package com.smu.saason.api;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 

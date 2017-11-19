@@ -1,7 +1,10 @@
-package com.smu.saason;
+package com.smu.saason.api;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Timer;
@@ -20,6 +23,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.smu.saason.bean.Posts;
+import com.smu.saason.dao.PostsDAO;
 
 public class NaverITNewsCrawler {
 	/* 
@@ -30,13 +37,14 @@ public class NaverITNewsCrawler {
 	
 	/*
 	 * TODO
-	 * (1) 크롤링한 뉴스를 DB에 저장
-	 * (posts : id, title, url, keyword_id, provider_id)
+	 * (1) 크롤링한 뉴스를 DB에 저장 > Null Pointer Error! (Autowired annotation)
+	 * posts : (id, title, url, keyword_id, provider_id)
 	 * (2) 유저가 원하는 키워드에 해당하는 뉴스 알림 -> 알림하는 소스 하나 더 만들기
 	 */
 
 	private static int interval = 60000; 
 	private static int executionTime = 60000 * 10;
+	
 	public static void main(String[] args) throws ClientProtocolException, IOException {
 		ScheduledJob job = new ScheduledJob();
 		Timer jobScheduler = new Timer();
@@ -54,6 +62,9 @@ public class NaverITNewsCrawler {
 
 class ScheduledJob extends TimerTask {
 	private static String newsProvider = "http://news.naver.com/main/list.nhn?mode=LS2D&mid=shm&sid1=105&sid2=283";
+	private static int logFileNo = 1;
+	private static int postId = 1;
+	@Autowired private PostsDAO postDAO;
 	
 	public String getCurrentDate() {
 		SimpleDateFormat date = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
@@ -76,7 +87,7 @@ class ScheduledJob extends TimerTask {
 					Document doc = Jsoup.parse(result);
 					Elements headlineRows = doc.select("table.container tbody tr td.content div.content div.list_body ul.type06_headline li");
 					Elements generalRows = doc.select("table.container tbody tr td.content div.content div.list_body ul.type06 li");
-					int postId = 1;
+					StringBuilder totalBuilder = new StringBuilder();
 					
 					/*  <dt>-<a> title
 					 *  <dt>-<a:href> link
@@ -89,10 +100,24 @@ class ScheduledJob extends TimerTask {
 						Elements links = row.select("a[href]");
 						StringBuilder builder = new StringBuilder();
 						
+						// append to local builder
 						System.out.println("> POSTID " + postId);
 						builder.append("TITLE : " + titles.text() + "\n");
 						builder.append("PRESS : " + presses.text() + "\n");
 						builder.append("LINK  : " + links.attr("abs:href"));
+						
+						// append to global builder
+						totalBuilder.append("TITLE : " + titles.text() + "\n");
+						totalBuilder.append("PRESS : " + presses.text() + "\n");
+						totalBuilder.append("LINK  : " + links.attr("abs:href"));
+						
+						// insert to DB
+						Posts post = new Posts(postId, titles.text(), links.attr("abs:href"), 1, 2, System.currentTimeMillis());
+						try {
+							postDAO.insert(post);
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
 						
 						System.out.println(builder.toString());
 						System.out.println("---------------------------------");
@@ -106,15 +131,36 @@ class ScheduledJob extends TimerTask {
 						Elements links = row.select("a[href]");
 						StringBuilder builder = new StringBuilder();
 						
+						// append to local builder
 						System.out.println("> POSTID " + postId);
 						builder.append("TITLE : " + titles.text() + "\n");
 						builder.append("PRESS : " + presses.text() + "\n");
 						builder.append("LINK  : " + links.attr("abs:href"));
 						
+						// append to global builder
+						totalBuilder.append("TITLE : " + titles.text() + "\n");
+						totalBuilder.append("PRESS : " + presses.text() + "\n");
+						totalBuilder.append("LINK  : " + links.attr("abs:href"));
+						
+						// insert to DB
+						Posts post = new Posts(postId, titles.text(), links.attr("abs:href"), 1, 2, System.currentTimeMillis());
+						try {
+							postDAO.insert(post);
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+						
 						System.out.println(builder.toString());
 						System.out.println("---------------------------------");
 						postId++;
 					}
+					
+					// save log file with global builder
+					BufferedWriter logFileWriter = new BufferedWriter(new FileWriter(logFileNo + ".txt"));
+					logFileWriter.write(totalBuilder.toString());
+					logFileWriter.newLine();
+					logFileWriter.close();
+					logFileNo++;
 					
 					return result;
 				}

@@ -1,4 +1,4 @@
-package com.smu.saason;
+package com.smu.saason.api;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
