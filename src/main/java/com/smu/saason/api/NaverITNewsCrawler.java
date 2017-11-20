@@ -27,6 +27,10 @@ import org.jsoup.select.Elements;
 import com.smu.saason.bean.Posts;
 
 public class NaverITNewsCrawler {
+	/*
+	 * BasicResponseHandler를 ScheduledJob 클래스 안에 내부 클래스로 작성
+	 */
+	
 	/* 
 	 * executionTime동안 주어진 interval마다 (시간 단위는 ms이며 60000ms = 1min)
 	 * newsProvider로 지정된 url에서 (현재 네이버 뉴스 IT 분야)
