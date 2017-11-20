@@ -26,6 +26,4 @@ public class PostsRestlet extends AbstractRestlet{
     	List<Posts> posts = postsDAO.getPosts();
     	return toJson(posts);
     }
-
-	
 }

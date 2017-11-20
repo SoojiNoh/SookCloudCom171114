@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import com.smu.saason.bean.Posts;
 
-
 @Component
 public class PostsDAO {
 	@Autowired
