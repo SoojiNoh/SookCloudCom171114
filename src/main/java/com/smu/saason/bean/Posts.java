@@ -26,7 +26,10 @@ public class Posts {
 	private int provider_id;
 	
 	@Getter 
-	private long created_at = System.currentTimeMillis();
+	private String created_at;
+	
+	@Getter
+	private String updated_at;
 	
 //	@Getter
 //	private String myfield;

@@ -17,13 +17,13 @@ public class PostsDAO {
 
 	public List<Posts> getPosts() throws SQLException {
 		List<Posts> result = jdbcTemplate.query("select * from posts", (rs, rowNum) -> {
-			return new Posts(rs.getInt("id"), rs.getString("title"), rs.getString("url"), rs.getInt("keyword_id"), rs.getInt("provider_id"), rs.getTimestamp("created_at").getTime());
+			return new Posts(rs.getInt("id"), rs.getString("title"), rs.getString("url"), rs.getInt("keyword_id"), rs.getInt("provider_id"), rs.getString("created_at"), rs.getString("updated_at"));
 		});
 		
 		return result;
 	}
 
 	public int insert(Posts post) throws SQLException {
-		return jdbcTemplate.update("insert into posts values (?,?,?,?,?,?)", post.id(), post.title(), post.url(), post.keyword_id(), post.provider_id(), new Timestamp(post.created_at()));
+		return jdbcTemplate.update("insert into posts values (?,?,?,?,?,?,?)", post.id(), post.title(), post.url(), post.keyword_id(), post.provider_id(), post.created_at(), post.updated_at());
 	}
 }

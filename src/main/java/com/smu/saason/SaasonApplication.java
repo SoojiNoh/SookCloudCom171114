@@ -9,8 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
-import com.smu.saason.api.NaverITNewsCrawler;
-import com.smu.saason.api.NaverITNewsCrawler2;
 
 @SpringBootApplication
 public class SaasonApplication extends SpringBootServletInitializer {
@@ -22,7 +20,5 @@ public class SaasonApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) throws ClientProtocolException, IOException {
         SpringApplication.run(SaasonApplication.class, args);
-        NaverITNewsCrawler.main(args);
-        // NaverITNewsCrawler2.main(args);
     }
 }

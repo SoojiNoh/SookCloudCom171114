@@ -30,6 +30,8 @@ import org.springframework.stereotype.Service;
 import com.smu.saason.bean.Posts;
 import com.smu.saason.dao.PostsDAO;
 
+import net.minidev.json.parser.ParseException;
+
 public class NaverITNewsCrawler2 {
 	/*
 	 * BasicResponseHandler 클래스 따로 작성
@@ -91,11 +93,10 @@ class ScheduledJobs extends TimerTask {
 }
 
 @SuppressWarnings("rawtypes")
-@Controller
 class BasicResponseHandler implements ResponseHandler {
 	private int logFileNo = 1;
 	private int postId = 1;
-	@Autowired private PostsDAO postDAO; // TODO
+	// @Autowired private PostsDAO postDAO;
 	
 	@Override
 	public String handleResponse(HttpResponse response) throws HttpResponseException, IOException {
@@ -127,10 +128,17 @@ class BasicResponseHandler implements ResponseHandler {
 			builder.append("<LINK>" + links.attr("abs:href"));
 			
 			// insert to DB
-			Posts post = new Posts(postId, titles.text(), links.attr("abs:href"), 1, 2, System.currentTimeMillis());
+//			Posts post = new Posts(postId, titles.text(), links.attr("abs:href"), 1, 2, System.currentTimeMillis());
+//			try {
+//				postDAO.insert(post);
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+			PostsRestlet pr = new PostsRestlet();
 			try {
-				postDAO.insert(post);
-			} catch (SQLException e) {
+				pr.createNewPost(postId, titles.text(), links.attr("abs:href"), 1, 2);
+			} catch (ParseException | SQLException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -158,12 +166,12 @@ class BasicResponseHandler implements ResponseHandler {
 			builder.append("<LINK>" + links.attr("abs:href"));
 			
 			// insert to DB
-			Posts post = new Posts(postId, titles.text(), links.attr("abs:href"), 1, 2, System.currentTimeMillis());
-			try {
-				postDAO.insert(post);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+//			Posts post = new Posts(postId, titles.text(), links.attr("abs:href"), 1, 2, System.currentTimeMillis());
+//			try {
+//				postDAO.insert(post);
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
 			
 			System.out.println(builder.toString());
 			System.out.println("---------------------------------");

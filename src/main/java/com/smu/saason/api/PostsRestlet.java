@@ -2,6 +2,8 @@ package com.smu.saason.api;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +38,11 @@ public class PostsRestlet extends AbstractRestlet{
     		@RequestParam(required=true) String title,
     		@RequestParam(required=true) String url,
     		@RequestParam(required=true) int keyword_id,
-    		@RequestParam(required=true) int provider_id)
+    		@RequestParam(required=true) int provider_id
+    		)
     throws ParseException, IOException, SQLException {
-    	postsDAO.insert(new Posts(id, title, url, keyword_id, provider_id, System.currentTimeMillis()));
+    	SimpleDateFormat date = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS");
+		String now = date.format(new Date());
+    	postsDAO.insert(new Posts(id, title, url, keyword_id, provider_id, now, now));
     }
 }
