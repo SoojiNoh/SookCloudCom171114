@@ -30,6 +30,21 @@ $(document).ready(function() {
     })    
     
 });
+
+$(document).ready(function() {
+    
+    $.ajax({
+        url:'api/posts/post1',
+        method: 'POST',
+        data : {
+        	"name" : "Post1"
+        }
+        success:function(data){
+	        console.log(data);
+        }
+    })    
+    
+});
 </script>
     
   </body>

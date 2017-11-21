@@ -18,8 +18,28 @@
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-    
 <script>
+var data = {
+		a: 'value'
+};
+
+console.log(data.a); 
+
+$(document).ready(function() {
+    
+    $.ajax({
+        url:'api/students/stu1',
+        method: 'POST',
+        data : {
+        	"name" : "Student1"
+        }
+        success:function(data){
+	        console.log(data);
+        }
+    })    
+    
+});
+
 $(document).ready(function() {
     
     $.ajax({

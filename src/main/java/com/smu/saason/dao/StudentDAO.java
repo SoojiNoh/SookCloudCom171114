@@ -26,4 +26,8 @@ public class StudentDAO {
 	public int insert(Student student) throws SQLException {
 		return jdbcTemplate.update("insert into student values (?,?,?,?)", student.username(), student.email(), student.password(), new Timestamp(student.create_time()));
 	}
+	
+	public int delete(Student student) throws SQLException {
+		return jdbcTemplate.update("delete from student where username = ?", student.username());
+	}
 }

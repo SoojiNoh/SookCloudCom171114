@@ -6,8 +6,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.smu.saason.bean.Student;
@@ -22,10 +24,18 @@ public class StudentRestlet extends AbstractRestlet{
 	StudentDAO studentDAO;
 	
     @RequestMapping(method = RequestMethod.GET, value = "/students", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String students() throws ParseException, IOException, SQLException {
+    public String getStudents() throws ParseException, IOException, SQLException {
     	List<Student> students = studentDAO.getStudents();
     	return toJson(students);
     }
 
-	
+    @RequestMapping(method = RequestMethod.POST, value = "/students/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public void createNewStudents(
+    		@PathVariable(required=true) String id,
+    		@RequestParam(required=true) String name)
+    throws ParseException, IOException, SQLException {
+    	System.out.println(id + ", " + name);
+    	studentDAO.insert(new Student(name, "email", "pass", System.currentTimeMillis()));
+    	// return toJson(students);
+    }
 }
